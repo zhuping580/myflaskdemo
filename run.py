@@ -1,5 +1,6 @@
 from flask import Flask, redirect, session
 from login import logins
+from model import model
 from user import users
 
 app = Flask(__name__)
@@ -27,6 +28,7 @@ def index():
 # 注册蓝图，第一个参数logins是蓝图对象，url_prefix参数默认值是根路由，如果指定，会在蓝图注册的路由url中添加前缀。
 app.register_blueprint(logins, url_prefix='')
 app.register_blueprint(users, url_prefix='')
+app.register_blueprint(model, url_prefix='')
 
 
 if __name__ == '__main__':
