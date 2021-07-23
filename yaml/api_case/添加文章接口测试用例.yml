@@ -1,0 +1,99 @@
+- enter:
+    content: 今天天气真好！
+    picture: www.xxxx.com
+    tag: A
+  out:
+    response:
+      code: 200
+      msg: success
+  title: 添加文章冒烟测试用例
+- enter:
+    content: ''
+    picture: www.xxxx.com
+    tag: A
+  out:
+    response:
+      code: 200
+      msg: success
+  title: 添加文章content长度校验
+- enter:
+    content: 今天天气真好！今天天气真好！今天天气真
+    picture: www.xxxx.com
+    tag: A
+  out:
+    response:
+      code: 200
+      msg: success
+  title: 添加文章content长度校验
+- enter:
+    content: 今天天气真好！今天天气真好！今天天气真好
+    picture: www.xxxx.com
+    tag: A
+  out:
+    response:
+      code: P00001
+      msg: fail
+  title: 添加文章content长度校验
+- enter:
+    content: ''
+    picture: www.xxxx.com
+    tag: A
+  out:
+    response:
+      code: 200
+      msg: success
+  title: 添加文章content必填校验
+- enter:
+    content: 今天天气真好！
+    picture: ''
+    tag: A
+  out:
+    response:
+      code: 200
+      msg: success
+  title: 添加文章picture必填校验
+- enter:
+    content: 今天天气真好！
+    picture: www.xxxx.com
+    tag: ''
+  out:
+    response:
+      code: 200
+      msg: success
+  title: 添加文章tag必填校验
+- enter:
+    content: 今天天气真好！
+    picture: www.xxxx.com
+    tag: A
+  out:
+    response:
+      code: 200
+      msg: success
+  title: 添加文章tag选项校验
+- enter:
+    content: 今天天气真好！
+    picture: www.xxxx.com
+    tag: b
+  out:
+    response:
+      code: 200
+      msg: success
+  title: 添加文章tag选项校验
+- enter:
+    content: 今天天气真好！
+    picture: www.xxxx.com
+    tag: c
+  out:
+    response:
+      code: 200
+      msg: success
+  title: 添加文章tag选项校验
+- enter:
+    content: 今天天气真好！
+    picture: www.xxxx.com
+    tag: d
+  out:
+    response:
+      code: 200
+      msg: success
+  title: 添加文章tag选项校验

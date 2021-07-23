@@ -1,0 +1,15 @@
+content:
+  case: 今天天气真好！
+  length: '[0,20]'
+  required: false
+picture:
+  case: www.xxxx.com
+  required: false
+tag:
+  case: A
+  option:
+  - A
+  - b
+  - c
+  - d
+  required: false
