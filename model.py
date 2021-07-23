@@ -4,6 +4,7 @@ import os
 from flask import Blueprint, request, jsonify
 from common.readYaml import ReadYaml
 from common.modelFuntion import CreateCase
+from common.token_method import login_required
 
 # 创建蓝图
 from configs.common import project_path
@@ -12,6 +13,7 @@ model = Blueprint('model', __name__)
 
 
 @model.route('/model/update', methods=['POST'])
+@login_required
 def update_model():
     """新增模型"""
     data = request.get_data()
@@ -23,6 +25,7 @@ def update_model():
 
 
 @model.route('/model/list', methods=['GET'])
+@login_required
 def model_list():
     """获取模型数据"""
     data = []
@@ -34,6 +37,7 @@ def model_list():
 
 
 @model.route('/model/creat_api_case', methods=['POST'])
+@login_required
 def creat_api_case():
     """生成接口测试用例"""
     data = request.get_data()

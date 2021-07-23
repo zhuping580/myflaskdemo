@@ -1,4 +1,4 @@
-
+from common.response import ResMsg
 
 def length_transform(length):
     valid = []
@@ -23,6 +23,27 @@ def length_transform(length):
         invalid.append(int_a2)
     dict1 = {'valid': valid, 'invalid': invalid}
     return dict1
+
+
+class RequestParser:
+    def __init__(self, jsonData: dict):
+        self.data = jsonData
+
+    def check_param(self, name, datatype=str, required=False, info=None):
+        res = ResMsg()
+        value = ''
+        if name not in self.data.keys():
+            res.update(code=-1, msg="缺少" + name + "参数")
+            return res.data
+        value = self.data[name]
+        if not value and required:
+            res.update(code=-1, msg=name + "参数必填")
+        print(type(value), datatype)
+        print(type(value) == str)
+        # print(isinstance(value, datatype))
+        # elif type(value) != datatype:
+        #     res.update(code=-1, msg=name + "参数类型不是" + datatype)
+        # return res.data
 
 
 if __name__ == '__main__':
