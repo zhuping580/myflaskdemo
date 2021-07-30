@@ -20,7 +20,7 @@ def query_db(_sql):
     cur.execute(_sql)  # 执行sql
     conn.commit()
     result = cur.fetchall()  # 获取所有查询结果
-    print(result)
+    print('数据库查询结果', result)
     cur.close()  # 关闭游标
     conn.close()  # 关闭连接
     return result  # 返回结果
@@ -35,8 +35,8 @@ def change_db(_sql):
         conn.commit()  # 提交更改
         print("修改数据库成功")
     except Exception as e:
-        print(e)
         conn.rollback()  # 回滚
+        return e
     finally:
         cur.close()  # 关闭游标
         conn.close()  # 关闭连接0

@@ -1,7 +1,7 @@
 import json
 from flask import Blueprint, request, jsonify
 from common.token_method import login_required, verify_token
-import db
+from common import db
 # 创建蓝图，第一个参数指定了蓝图的名字。
 users = Blueprint('user', __name__)
 
@@ -14,7 +14,6 @@ def user_info():
     user_id = verify_token(token)
     _sql = "select * from users where id=" + str(user_id)
     user = db.query_db(_sql)
-
     data = {
         "id": user[0][0],
         "name": user[0][1],

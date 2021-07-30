@@ -22,6 +22,44 @@ class CreateCase:
         firstCase['out'] = {'response': {'code': 200, 'msg': 'success'}}
         self.case.append(firstCase)
 
+    def max_length(self, key, value):
+        if "maxlength" not in value.keys():
+            return
+        maxlength = value["maxlength"]
+        if not maxlength:
+            return
+        _case = value["case"]
+        case21 = copy.deepcopy(self.firstCase)
+        case21['title'] = self.title + key + "最大长度校验"
+        _case = _case * (maxlength // len(_case) + 1)
+        case21['enter'][key] = _case[0:maxlength - 1]
+        case21['out'] = {'response': {'code': 200, 'msg': 'success'}}
+        self.case.append(case21)
+        case22 = copy.deepcopy(self.firstCase)
+        case22['title'] = self.title + key + "最大长度校验"
+        # _case = _case * (maxlength // len(_case) + 1)
+        case22['enter'][key] = _case[0:maxlength]
+        case22['out'] = {'response': {'code': 'P00001', 'msg': 'fail'}}
+        self.case.append(case22)
+
+    def min_length(self, key, value):
+        if "minlength" not in value.keys():
+            return
+        minlength = value["minlength"]
+        if not minlength:
+            return
+        _case = value["case"]
+        case21 = copy.deepcopy(self.firstCase)
+        case21['title'] = self.title + key + "最小长度校验"
+        case21['enter'][key] = _case[0: minlength - 1]
+        case21['out'] = {'response': {'code': 200, 'msg': 'success'}}
+        self.case.append(case21)
+        case22 = copy.deepcopy(self.firstCase)
+        case22['title'] = self.title + key + "最小长度校验"
+        case22['enter'][key] = _case[0:minlength - 2]
+        case22['out'] = {'response': {'code': 'P00001', 'msg': 'fail'}}
+        self.case.append(case22)
+
     def check_length(self, key, value):
         if "length" not in value.keys():
             return
@@ -72,6 +110,8 @@ class CreateCase:
     def foreach_item(self):
         for key in self.keys:
             self.check_length(key, self.goodDate[key])
+            self.max_length(key, self.goodDate[key])
+            self.min_length(key, self.goodDate[key])
             self.check_required(key, self.goodDate[key])
             self.select_option(key, self.goodDate[key])
 

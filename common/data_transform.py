@@ -38,8 +38,6 @@ class RequestParser:
         value = self.data[name]
         if not value and required:
             res.update(code=-1, msg=name + "参数必填")
-        print(type(value), datatype)
-        print(type(value) == str)
         # print(isinstance(value, datatype))
         # elif type(value) != datatype:
         #     res.update(code=-1, msg=name + "参数类型不是" + datatype)

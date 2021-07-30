@@ -1,7 +1,8 @@
 from flask import Flask, redirect, session
-from login import logins
-from model import model
-from user import users
+from app.login import logins
+from app.model import model
+from app.user import users
+from app.interface import interface
 
 app = Flask(__name__)
 # Set the secret key to some random bytes. Keep this really secret!
@@ -30,6 +31,7 @@ url_prefix = '/api/v1'
 app.register_blueprint(logins, url_prefix=url_prefix)
 app.register_blueprint(users, url_prefix=url_prefix)
 app.register_blueprint(model, url_prefix=url_prefix)
+app.register_blueprint(interface, url_prefix=url_prefix)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 import json
 from flask import Blueprint, request, jsonify, redirect, session
-import db
+from common import db
 from common import token_method
 from common.data_transform import RequestParser
 from common.response import ResMsg
@@ -14,7 +14,10 @@ def login():
     res = ResMsg()
     if request.method == 'POST':
         """登录"""
+        print(request.data)
         data = request.get_data()
+        if not data:
+            return jsonify(code=-1, message=u"参数不完整")
         json_data = json.loads(data)
         req_parser = RequestParser(json_data)
         flag1 = req_parser.check_param('username', datatype='str', required=True)

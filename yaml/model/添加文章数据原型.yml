@@ -1,6 +1,7 @@
 content:
   case: 今天天气真好！
-  length: '[0,20]'
+  maxlength: 20
+  minlength: 0
   required: false
 picture:
   case: www.xxxx.com
