@@ -1,8 +1,9 @@
 import json
+from datetime import datetime
 
 from flask import Blueprint, request, jsonify
 
-from common.token_method import login_required
+from common.token_method import login_required, verify_token
 from common import db
 
 # 创建蓝图
@@ -13,31 +14,43 @@ params = Blueprint('params', __name__)
 @params.route('/params/update', methods=['POST'])
 @login_required
 def update_params():
+    userid = verify_token()
     data = request.get_data()
     json_data = json.loads(data)
     print(json_data)
     i_id = json_data['i_id']
     name = json_data['name']
     case = json_data['case']
-    maxlenght = json_data['maxlenght']
-    minlenght = json_data['minlenght']
+    maxlength = json_data['maxlength'] or 'null'
+    minlength = json_data['minlength'] or 'null'
     required = json_data['required']
-    option = json_data['option']
-    url = json_data['url']
+    # if required:
+    #     required = 1
+    # else:
+    #     required = 0
+    option = json_data['option'] or 'null'
+    # url = json_data['url']
+    # 修改
     if 'id' in json_data.keys():
         _id = json_data['id']
         if db.query_db("select * from params where id='{}'".format(_id)):
-            _sql = "update params set name='%s',case='%s',maxlenght='%d',minlenght='%d',required='%s',option='%s' " \
-                   "where id='%d'" \
-                   % (name, case, maxlenght, minlenght, required, option, _id)
+            _sql = "update params " \
+                   "set name='{}',case1='{}',maxlength={},minlength={},required={},options={},updated_by={} " \
+                   "where id={}".format(name, case, maxlength, minlength, required, option, userid, _id)
             e = db.change_db(_sql)
             if e:
+                print(e)
                 return jsonify(code=-1, message=u"操作失败")
             return jsonify(code=0, message=u"修改成功")
-    _sql = '''insert into params (name,case,maxlenght,minlenght,required,option,i_id) value ('%s', '%s', '%s')'''\
-           % (name, case, maxlenght, minlenght, required, option, i_id)
+    # 新增
+    ctime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    _sql = '''insert into params 
+            (name,case1,maxlength,minlength,required,options,i_id,created,created_by) 
+            value ('%s','%s','%d','%d','%d','%s','%d','%s','%d')'''\
+            % (name, case, maxlength, minlength, required, option, i_id, ctime, userid)
     e = db.change_db(_sql)
     if e:
+        print(e)
         return jsonify(code=-1, message=u"操作失败")
     return jsonify(code=0, message=u"success")
 
@@ -46,18 +59,27 @@ def update_params():
 @login_required
 def params_list():
     """获取模型数据"""
+    i_id = request.args.get("i_id")
+    # json_data = json.loads(data)
+    print(request)
+    # i_id = json_data['i_id']
     data = []
-    database = db.query_db('''select id,name,case,maxlenght,minlenght,required,option,i_id from params''')
+    database = db.query_db(
+        '''select id,name,case1,maxlength,minlength,required,options,i_id,updated 
+        from params
+        where i_id='%s';''' % i_id
+    )
     for i in database:
         temp = {}
         temp['id'] = i[0]
         temp['name'] = i[1]
         temp['case'] = i[2]
-        temp['maxlenght'] = i[3]
-        temp['minlenght'] = i[4]
+        temp['maxlength'] = i[3]
+        temp['minlength'] = i[4]
         temp['required'] = i[5]
         temp['option'] = i[6]
         temp['i_id'] = i[7]
+        temp['updated'] = i[8]
         data.append(temp)
 
     return jsonify(code=0, message=u"success", data=data)

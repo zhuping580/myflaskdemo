@@ -6,9 +6,6 @@
 #
 # print(os.listdir(project_path+r"\\yaml\\model"))
 
-def abc(b=str):
-    a = "admin"
-    if type(a) != b:
-        print(123)
-    print(456)
-abc()
+a = {"a":1, "b":2}
+if a["c"]:
+    print(123)

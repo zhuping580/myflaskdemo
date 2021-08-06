@@ -3,6 +3,9 @@ from app.login import logins
 from app.model import model
 from app.user import users
 from app.interface import interface
+from app.params import params
+from app.cases import cases
+from app.systems import systems
 
 app = Flask(__name__)
 # Set the secret key to some random bytes. Keep this really secret!
@@ -32,8 +35,11 @@ app.register_blueprint(logins, url_prefix=url_prefix)
 app.register_blueprint(users, url_prefix=url_prefix)
 app.register_blueprint(model, url_prefix=url_prefix)
 app.register_blueprint(interface, url_prefix=url_prefix)
+app.register_blueprint(params, url_prefix=url_prefix)
+app.register_blueprint(cases, url_prefix=url_prefix)
+app.register_blueprint(systems, url_prefix=url_prefix)
 
 
 if __name__ == '__main__':
-    print(app.url_map)
+    # print(app.url_map)
     app.run(debug=True)

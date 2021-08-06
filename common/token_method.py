@@ -10,7 +10,7 @@ def create_token(api_user):
     """
     # 第一个参数是内部的私钥，这里写在共用的配置信息里了，如果只是测试可以写死
     # 第二个参数是有效期(秒)
-    s = Serializer(current_app.config["SECRET_KEY"], expires_in=3600)
+    s = Serializer(current_app.config["SECRET_KEY"], expires_in=3600*6)
     # 接收用户id转换与编码
     token = s.dumps({"id": api_user}).decode("ascii")
     return token
@@ -38,13 +38,13 @@ def login_required(view_func):
     return verify_token_
 
 
-def verify_token(token):
+def verify_token():
     '''
     校验token
     :param token:
     :return: 用户信息 or None
     '''
-
+    token = request.headers["token"]
     # 参数为私有秘钥，跟上面方法的秘钥保持一致
     s = Serializer(current_app.config["SECRET_KEY"])
     try:

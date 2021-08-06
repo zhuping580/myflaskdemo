@@ -9,9 +9,9 @@ users = Blueprint('user', __name__)
 @users.route('/user/info', methods=['GET'])
 @login_required
 def user_info():
-    token = request.headers["token"]
+    # token = request.headers["token"]
     # 拿到token，去换取用户信息
-    user_id = verify_token(token)
+    user_id = verify_token()
     _sql = "select * from users where id=" + str(user_id)
     user = db.query_db(_sql)
     data = {
