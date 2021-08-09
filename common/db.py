@@ -68,5 +68,8 @@ def db_json(table, where=None, *arg):
 
 
 if __name__ == '__main__':
-    res = db_json('cases', 'title', 'enter', 'outs')
+    i_id = 1
+    where = "i_id='%s';" % i_id
+    res = db_json('params', where, 'id', 'name', 'case1', 'maxlength', 'minlength',
+                      'required', 'options', 'i_id', 'updated')
     print(res)

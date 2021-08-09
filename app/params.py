@@ -63,25 +63,9 @@ def params_list():
     # json_data = json.loads(data)
     print(request)
     # i_id = json_data['i_id']
-    data = []
-    database = db.query_db(
-        '''select id,name,case1,maxlength,minlength,required,options,i_id,updated 
-        from params
-        where i_id='%s';''' % i_id
-    )
-    for i in database:
-        temp = {}
-        temp['id'] = i[0]
-        temp['name'] = i[1]
-        temp['case'] = i[2]
-        temp['maxlength'] = i[3]
-        temp['minlength'] = i[4]
-        temp['required'] = i[5]
-        temp['option'] = i[6]
-        temp['i_id'] = i[7]
-        temp['updated'] = i[8]
-        data.append(temp)
-
+    where = "i_id=%s;" % i_id
+    data = db.db_json('params', where, 'id', 'name', 'case1', 'maxlength', 'minlength',
+                      'required', 'options', 'i_id', 'updated')
     return jsonify(code=0, message=u"success", data=data)
 
 
